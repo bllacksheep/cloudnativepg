@@ -39,8 +39,8 @@ export PATH=$HOME/.krew/bin:$PATH
 kubectl krew install cnpg
 
 if [ "$1" == "--data" ]; then
-	sudo kubectl apply -f cluster-backup-role-binding.yaml
-	sudo kubectl apply -f cluster-backup-schedule.yaml
+	sudo kubectl apply -f data/cluster-backup-role-binding.yaml
+	sudo kubectl apply -f data/cluster-backup-schedule.yaml
 fi
 
 
