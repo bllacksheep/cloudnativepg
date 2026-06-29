@@ -1,9 +1,7 @@
 ```
-sudo k create ns db
-sudo k get po -n db
-sudo k get cluster -n db
-sudo k get clusters -n db
-sudo kubectl get clusters -n db
+sudo kubectl get cluster -n db
+sudo kubectl get backup -n db
+sudo kubectl get scheduledbackup -n db
 sudo kubectl cnpg status cluster-with-metrics -n db
 sudo kubectl exec -i -n db cluster-with-metrics-1 -c postgres -- /bin/bash\n
 sudo --preserve-env=PATH kubectl cnpg status cluster-with-metrics -n db
