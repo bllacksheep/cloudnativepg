@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if [ "$1" == "-v" ]; then
+if [ "$1" == "-v" ] || [ "$2" == "-v" ]; then
   set -x
 fi
 
@@ -35,10 +35,17 @@ done
 
 sudo kubectl apply -f cluster.yaml
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
-
 export PATH=$HOME/.krew/bin:$PATH
 kubectl krew install cnpg
+
+if [ "$1" == "--data" ]; then
+	sudo kubectl apply -f cluster-backup-role-binding.yaml
+	sudo kubectl apply -f cluster-backup-schedule.yaml
+fi
+
 
 echo ################ RUNNING DB STATUS ######################
 
 sudo --preserve-env=PATH kubectl cnpg status cluster-with-metrics -n db
+
+
