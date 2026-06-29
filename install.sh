@@ -16,7 +16,7 @@ KREW="krew-${OS}_${ARCH}" &&   wget "https://github.com/kubernetes-sigs/krew/rel
 tar zxvf "${KREW}.tar.gz" && ./"${KREW}" install krew;
 )
 
-echo 'export PATH="export PATH="$HOME/.krew/bin:$PATH"' >> ~/.bashrc && source ~/.bashrc
+echo 'export PATH=$HOME/.krew/bin:$PATH' >> ~/.bashrc && source ~/.bashrc
 
 (
 cd $(mktemp -d) && \
