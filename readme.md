@@ -8,6 +8,9 @@
  kubectl cnpg psql cluster-with-metrics -n db
  k get secrets -n db
 
+```
+kubectl create secret generic aws-creds -n db --from-literal=ACCESS_KEY_ID=yolo --from-literal=ACCESS_SECRET_KEY=yolo
+```
 cloudnativepg backup and restore quickstart
 create cluster
 give serviceaccount access to aws-creds secret
