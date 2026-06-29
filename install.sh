@@ -35,7 +35,10 @@ done
 
 sudo kubectl apply -f cluster.yaml
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+
+export PATH=$HOME/.krew/bin:$PATH
 kubectl krew install cnpg
 
 echo ################ RUNNING DB STATUS ######################
+
 sudo --preserve-env=PATH kubectl cnpg status cluster-with-metrics -n db
