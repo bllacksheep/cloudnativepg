@@ -1,0 +1,41 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: cluster-with-metrics-0001-secret-reader-binding  # new binding the new sa to the existing cnpg-pod-secret-reader
+  namespace: db
+subjects:
+- kind: ServiceAccount
+  name: cluster-with-metrics-0001 # new service account created and named by the cluster
+  namespace: db
+roleRef:
+  kind: Role
+  name: cnpg-pod-secret-reader # already exists
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-with-metrics-0001 # new cluster name, increment for each recovery
+  namespace: db
+spec:
+  instances: 3
+  storage:
+    size: 1Gi
+  # startup method bootstrap
+  bootstrap:
+    recovery:
+      source: "aws-s3" # name the source, defined under 'externalClusters'
+  externalClusters:
+    - name: "aws-s3" # the data source
+      barmanObjectStore:
+        destinationPath: "s3://cloudnative-pg-bakups-010skdkv11/backups"
+        serverName: "cluster-with-metrics" # s3 directory, name of the cluster to restore from, will change with each new cluster
+        s3Credentials:
+          accessKeyId:
+            name: aws-creds
+            key: ACCESS_KEY_ID
+          secretAccessKey:
+            name: aws-creds
+            key: ACCESS_SECRET_KEY
+
