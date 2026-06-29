@@ -27,7 +27,11 @@ wget "https://github.com/derailed/k9s/releases/download/v0.50.18/k9s_Linux_arm64
 sudo kubectl apply -f \
   https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.16/releases/cnpg-1.16.5.yaml
 
-for i in {1..5}; do echo waiting for $((6-$i)) && sleep 1; done
+i=0
+until sudo kubectl rollout status deployment/cnpg-controller-manager -n cnpg-system --timeout=90s; do
+    echo "cnpg deployinag, please wait $(($i+1))"
+    sleep 1
+done
 
 sudo kubectl apply -f cluster.yaml
 sudo chmod 644 /etc/rancher/k3s/k3s.yaml
