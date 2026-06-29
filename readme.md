@@ -1,13 +1,14 @@
- k create ns db
- k get po -n db
- k get cluster -n db
- k get clusters -n db
- kubectl get clusters -n db
- kubectl cnpg status cluster-with-metrics -n db
- kubectl exec -i -n db cluster-with-metrics-1 -c postgres -- /bin/bash\n
- kubectl cnpg psql cluster-with-metrics -n db
- k get secrets -n db
-
+```
+sudo k create ns db
+sudo k get po -n db
+sudo k get cluster -n db
+sudo k get clusters -n db
+sudo kubectl get clusters -n db
+sudo kubectl cnpg status cluster-with-metrics -n db
+sudo kubectl exec -i -n db cluster-with-metrics-1 -c postgres -- /bin/bash\n
+sudo --preserve-env=PATH kubectl cnpg status cluster-with-metrics -n db
+sudo k get secrets -n db
+```
 ```
 kubectl create secret generic aws-creds -n db --from-literal=ACCESS_KEY_ID=yolo --from-literal=ACCESS_SECRET_KEY=yolo
 ```
