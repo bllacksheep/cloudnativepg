@@ -1,0 +1,14 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: daily-s3-backup-schedule
+  namespace: db
+spec:
+  # Run every night at 2:00 AM
+  schedule: "0 0 2 * * *"
+  # Tell it which PostgreSQL cluster to back up
+  cluster:
+    name: cluster-with-metrics
+  # Optional: If a scheduled backup fails, should it retry?
+  immediate: false
+

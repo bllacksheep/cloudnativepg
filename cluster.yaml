@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: db
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-with-metrics
+  namespace: db
+spec:
+  instances: 3
+  backup:
+    barmanObjectStore:
+      destinationPath: "s3://cloudnative-pg-bakups-010skdkv11/backups"
+      s3Credentials:
+        accessKeyId:
+          name: aws-creds
+          key: ACCESS_KEY_ID
+        secretAccessKey:
+          name: aws-creds
+          key: ACCESS_SECRET_KEY
+
+  storage:
+    size: 1Gi
+
+  monitoring:
+    enablePodMonitor: true
