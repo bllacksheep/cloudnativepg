@@ -10,7 +10,7 @@ metadata:
   namespace: db
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:15.19-standard-trixie
+  imageName: ghcr.io/cloudnative-pg/postgresql:15.19-system-trixie
   backup:
     barmanObjectStore:
       destinationPath: "s3://cloudnative-pg-bakups-010skdkv11/backups"
