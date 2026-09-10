@@ -5,7 +5,7 @@ if [ "$1" == "-v" ] || [ "$2" == "-v" ]; then
 fi
 
 sudo apt update && sudo apt upgrade -y
-sudo apt install curl -y
+sudo apt install curl postgresql-client-17 -y
 
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION="v1.24.17+k3s1" sh -
 
@@ -24,19 +24,25 @@ wget "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip"
 wget "https://github.com/derailed/k9s/releases/download/v0.50.18/k9s_Linux_arm64.tar.gz" 
 )
 
-sudo kubectl apply -f \
-	https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.22.1/cnpg-1.22.1.yaml
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+
+sudo kubectl apply -f https://raw.githubusercontent.com/longhorn/longhorn/master/deploy/longhorn.yaml
+sudo kubectl apply -f longhorn-storage-class.yaml
+sudo kubectl annotate storageclass longhorn storageclass.kubernetes.io/is-default-class="false" --overwrite
+
+sudo kubectl apply -f https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.22.1/cnpg-1.22.1.yaml
 
 i=0
 until sudo kubectl rollout status deployment/cnpg-controller-manager -n cnpg-system --timeout=90s; do
-    echo "cnpg deployinag, please wait $(($i+1))"
+    echo "cnpg deployinag, please wait $((90-$i))"
     sleep 1
 done
 
 sudo kubectl apply -f cluster.yaml
-sudo chmod 644 /etc/rancher/k3s/k3s.yaml
 export PATH=$HOME/.krew/bin:$PATH
 kubectl krew install cnpg
+
+kubectl apply -f pooler.yaml
 
 if [ "$1" == "--data" ]; then
 	sudo kubectl apply -f data/cluster-backup-role-binding.yaml

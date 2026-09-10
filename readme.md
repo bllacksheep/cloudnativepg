@@ -22,10 +22,16 @@ helper commands
 sudo kubectl get cluster -n db
 sudo kubectl get backup -n db
 sudo kubectl get scheduledbackup -n db
-sudo kubectl cnpg status cluster-with-metrics -n db
-sudo kubectl exec -i -n db cluster-with-metrics-1 -c postgres -- /bin/bash\n
-sudo --preserve-env=PATH kubectl cnpg status cluster-with-metrics -n db
+sudo kubectl cnpg status cluster-0001 -n db
+sudo kubectl exec -i -n db cluster-0001-1 -c postgres -- /bin/bash\n
+sudo --preserve-env=PATH kubectl cnpg status cluster-0001 -n db
 sudo k get secrets -n db
-kubectl delete cluster cluster-with-metrics -n db
-
+kubectl delete cluster cluster-0001 -n db
+```
+testing cluster swap when changing backend storage class
+```
+kubectl port-forward svc/pooler-rw 5432:5432 -n db
+kubectl get secret -n db cluster-0001-app -o yaml -o jsonpath='{.data.password}' |base64 -d
+kubectl get secret -n db cluster-0002-app -o yaml -o jsonpath='{.data.password}' |base64 -d
+psql -h 127.0.0.1 -p 5432 -U app
 ```

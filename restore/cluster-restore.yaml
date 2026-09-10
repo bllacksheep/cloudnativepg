@@ -1,4 +1,3 @@
----
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
@@ -23,6 +22,17 @@ roleRef:
   kind: Role
   name: cnpg-pod-secret-reader
   apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: cluster-0002-daily
+  namespace: db
+spec:
+  schedule: "0 0 2 * * *"
+  cluster:
+    name: cluster-0002
+  immediate: false
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
