@@ -25,7 +25,7 @@ wget "https://github.com/derailed/k9s/releases/download/v0.50.18/k9s_Linux_arm64
 )
 
 sudo kubectl apply -f \
-  https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/release-1.16/releases/cnpg-1.16.5.yaml
+	https://github.com/cloudnative-pg/cloudnative-pg/releases/download/v1.22.1/cnpg-1.22.1.yaml
 
 i=0
 until sudo kubectl rollout status deployment/cnpg-controller-manager -n cnpg-system --timeout=90s; do
