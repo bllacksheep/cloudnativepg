@@ -46,6 +46,6 @@ fi
 
 echo ################ RUNNING DB STATUS ######################
 
-sudo --preserve-env=PATH kubectl cnpg status cluster-with-metrics -n db
+sudo --preserve-env=PATH kubectl cnpg status cluster-0001 -n db
 
 

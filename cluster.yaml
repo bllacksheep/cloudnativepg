@@ -6,7 +6,7 @@ metadata:
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: cluster-with-metrics
+  name: cluster-0001
   namespace: db
 spec:
   instances: 3

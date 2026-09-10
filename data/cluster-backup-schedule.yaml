@@ -8,7 +8,7 @@ spec:
   schedule: "0 0 2 * * *"
   # Tell it which PostgreSQL cluster to back up
   cluster:
-    name: cluster-with-metrics
+    name: cluster-0001
   # Optional: If a scheduled backup fails, should it retry?
   immediate: false
 

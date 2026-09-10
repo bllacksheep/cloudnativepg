@@ -16,7 +16,7 @@ metadata:
   namespace: db
 subjects:
 - kind: ServiceAccount
-  name: cluster-with-metrics
+  name: cluster-0001
   namespace: db
 roleRef:
   kind: Role
