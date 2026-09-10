@@ -39,6 +39,34 @@ spec:
     name: cluster-0001
   immediate: false
 ---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: longhorn
+provisioner: driver.longhorn.io
+parameters:
+  numberOfReplicas: '2'
+  staleReplicaTimeout: '30'
+allowVolumeExpansion: true
+reclaimPolicy: Retain
+volumeBindingMode: Immediate
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: pooler-rw
+  namespace: db
+spec:
+  cluster:
+    name: cluster-0001
+  type: rw
+  instances: 2
+  pgbouncer:
+    poolMode: session
+    parameters:
+      max_client_conn: "1000"
+      default_pool_size: "20"
+---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
